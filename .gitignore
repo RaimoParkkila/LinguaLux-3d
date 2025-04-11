@@ -7,3 +7,6 @@
 .vs/
 *.csproj
 *.sln
+*.cube
+*.exr
+*.png
