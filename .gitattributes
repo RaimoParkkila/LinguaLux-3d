@@ -9,3 +9,6 @@ Vain filter=lfs diff=lfs merge=lfs -text
 yli filter=lfs diff=lfs merge=lfs -text
 50MB filter=lfs diff=lfs merge=lfs -text
 PNG-tiedostoille filter=lfs diff=lfs merge=lfs -text
+Lisää filter=lfs diff=lfs merge=lfs -text
+haluamasi filter=lfs diff=lfs merge=lfs -text
+tiedostotyypit filter=lfs diff=lfs merge=lfs -text
