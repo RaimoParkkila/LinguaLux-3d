@@ -1,3 +1,4 @@
 *.png filter=lfs diff=lfs merge=lfs -text
 Assets/kloppenheim_06_puresky_8k.cube filter=lfs diff=lfs merge=lfs -text
 Assets/kloppenheim_06_puresky_8k.exr filter=lfs diff=lfs merge=lfs -text
+Assets/AllSkyFree/Cold[[:space:]]Sunset/Cold[[:space:]]Sunset[[:space:]]Equirect.png filter=lfs diff=lfs merge=lfs -text
