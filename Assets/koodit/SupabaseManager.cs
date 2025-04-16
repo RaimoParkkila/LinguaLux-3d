@@ -21,7 +21,7 @@ public class SupabaseManager : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); // If an instance already exists, destroy this object
+           //  Destroy(gameObject); // If an instance already exists, destroy this object
         }
     }
 
@@ -44,8 +44,55 @@ public class SupabaseManager : MonoBehaviour
     void Start()
     {
         UnityEngine.Debug.Log("Liitetty objektiin: " + gameObject.name);
-        StartCoroutine(GetData());
+        //StartCoroutine(GetData());
+        StartCoroutine(GetDataFromTable("chinese"));
     }
+
+
+    public IEnumerator GetDataFromTable(string table)
+
+    {
+
+
+        UnityEngine.Debug.Log("✅ GetDataFromTable kutsuttiin: ");
+        isLoading = true;
+        string url = $"{baseUrl}/{table}?select=*";
+        UnityEngine.Debug.Log("✅ koitetaan hakea urlia " + url);
+
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            request.SetRequestHeader("apikey", apiKey);
+            request.SetRequestHeader("Accept", "application/json");
+
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                questions = JsonConvert.DeserializeObject<List<QuestionData>>(request.downloadHandler.text);
+                UnityEngine.Debug.Log("✅ Data haettu onnistuneesti: " + request.downloadHandler.text);
+
+                if (questions != null && questions.Count > 0)
+                {
+                    currentQuestionIndex = 0;
+                    isLoading = false;
+                    LoadQuestion();
+                }
+                else
+                {
+                    questionText.text = "¡No hay preguntas disponibles!";
+                    UnityEngine.Debug.LogError($"❌ Virhe: {request.responseCode} - {request.error}");
+                    isLoading = false;
+                }
+            }
+            else
+            {
+                UnityEngine.Debug.LogError($"❌ Virhe: {request.responseCode} - {request.error}");
+                questionText.text = "¡Error al cargar datos!";
+                isLoading = false;
+            }
+        }
+    }
+
 
     IEnumerator GetData()
     {

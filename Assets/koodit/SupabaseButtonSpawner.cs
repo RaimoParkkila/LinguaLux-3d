@@ -18,7 +18,9 @@ public class SupabaseButtonSpawner : MonoBehaviour
     public string tableName = "languagetables";
     private string apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dHRzc2dwdmlldWZydWViYnhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDExMTM4NTIsImV4cCI6MjA1NjY4OTg1Mn0.4gK35q7MWVju2NODxxAHb0O966H6YpJWTTMgcVl8TqU";
 
+ 
 
+    public List<OptionData> optionsData;
     public void GetDataFromTable()
     {
         // Esimerkiksi suoritetaan HTTP-pyyntö tai käytetään Supabase SDK:ta
@@ -91,13 +93,19 @@ public class SupabaseButtonSpawner : MonoBehaviour
                 btn.onClick.AddListener(() =>
                 {
                     UnityEngine.Debug.Log("Klikattiin: " + vaihtoehto);
+
                     if (statusText != null)
                     {
                         statusText.text = "Klikattiin: " + vaihtoehto;
                     }
 
+                    // Käynnistetään uuden datan haku valitun vaihtoehdon perusteella
+                    SupabaseManager.Instance.StartCoroutine(
+                        SupabaseManager.Instance.GetDataFromTable(vaihtoehto));
+
                     OnButtonClicked?.Invoke(vaihtoehto); // nyt käytetään valittua vaihtoehtoa suoraan
                 });
+
             }
 
             LayoutElement le = uusiNappi.GetComponent<LayoutElement>();

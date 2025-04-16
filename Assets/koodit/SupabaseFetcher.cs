@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,11 +16,13 @@ public class SupabaseFetcher : MonoBehaviour
     void Start()
     {
         StartCoroutine(HaeDataJsonina());
+        UnityEngine.Debug.Log("‚úÖ SupabaseManager Start() k√§ynnistyi");
     }
 
     IEnumerator HaeDataJsonina()
     {
         string url = $"{perusUrl}/{tauluNimi}?select=*";
+ 
 
         using (UnityWebRequest pyynto = UnityWebRequest.Get(url))
         {
@@ -36,11 +38,11 @@ public class SupabaseFetcher : MonoBehaviour
                 // Deserialize JSON -> lista kielidataa
                 List<Kielidata> tulokset = JsonConvert.DeserializeObject<List<Kielidata>>(json);
 
-                // Poimitaan title-kent‰t listaan
+                // Poimitaan title-kent√§t listaan
                 List<string> vaihtoehdot = new List<string>();
                 foreach (var rivi in tulokset)
                 {
-                    vaihtoehdot.Add(rivi.title);  // nyt k‰ytet‰‰n JSONin "title"-kentt‰‰
+                    vaihtoehdot.Add(rivi.title);  // nyt k√§ytet√§√§n JSONin "title"-kentt√§√§
                 }
 
                 // Luodaan napit
